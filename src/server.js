@@ -20,7 +20,11 @@ app.get('/', (req, res) => {
     .then((albums) => {
       queries.getRecentReviews()
         .then((reviews) => {
-          res.render('index', { albums, reviews })
+          res.render('index', {
+            albums,
+            reviews,
+            title: 'Vinyl'
+          })
         })
     })
     .catch((error) => {
@@ -28,30 +32,19 @@ app.get('/', (req, res) => {
     })
 })
 
-// app.get()
-
-// app.get('/', (req, res) => {
-//   db.getAlbums((error, albums) => {
-//     if (error) {
-//       res.status(500).render('error', {error})
-//     } else {
-//       res.render('index', {albums})
-//     }
-//   })
-// })
-
-// app.get('/albums/:albumID', (req, res) => {
-//   const albumID = req.params.albumID
-//
-//   db.getAlbumsByID(albumID, (error, albums) => {
-//     if (error) {
-//       res.status(500).render('error', {error})
-//     } else {
-//       const album = albums[0]
-//       res.render('album', {album})
-//     }
-//   })
-// })
+app.get('/albums/:id', (req, res) => {
+  queries.getAlbumsByID(req.params.id)
+    .then((album) => {
+      queries.getReviewsByAlbumId(album.id)
+        .then((reviews) => {
+          res.render('album', {
+            reviews,
+            album,
+            title: `Vinyl : ${album.title}`
+          })
+        })
+    })
+})
 
 app.use((req, res) => {
   res.status(404).render('not_found')
