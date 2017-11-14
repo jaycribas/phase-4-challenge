@@ -14,7 +14,16 @@
     <div class='row'>
       <% include partials/index-sidebar.ejs %>
       <div class='col-sm-9 index-main'>
-        <p>something something</p>
+        <h2 class='header'>Reviews</h2>
+        <div class='sidebar-list'>
+          <% reviews.forEach(function(review) { %>
+            <div>
+              <h5><a href="/review/<%= album.id %>"><%= review.title %></a></h5>
+              <span><%= review.date %></span>
+              <p><%= review.body %></p>
+            </div>
+          <% }) %>
+        </div>
       </div>
     </div>
   </div>
