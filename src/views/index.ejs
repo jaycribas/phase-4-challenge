@@ -2,22 +2,30 @@
 <html>
 <head>
   <title>Vinyl</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="/style.css">
   <script type="text/javascript" src="/script.js"></script>
 </head>
 <body>
+  <% include partials/nav.ejs %>
+  <div class='parallax'></div>
 
-  <h1>Vinyl</h1>
-
-  <h2>Records</h2>
-
-  <div class="album-list">
-    <% albums.forEach(function(album) { %>
-      <div>
-        <h5><a href="/albums/<%= album.id %>"><%= album.title %></a></h5>
-        <span><%= album.artist %></span>
+  <div class='container content'>
+    <div class='row'>
+      <% include partials/index-sidebar.ejs %>
+      <div class='col-sm-9 index-main'>
+        <h2 class='header'>Recent Reviews</h2>
+        <div class='sidebar-list'>
+          <% reviews.forEach(function(review) { %>
+            <div>
+              <h5><a href="/album/<%= review.album_id %>"><%= review.title %></a></h5>
+              <span>Posted on <%= review.date %></span>
+              <p><%= review.body %></p>
+            </div>
+          <% }) %>
+        </div>
       </div>
-    <% }) %>
+    </div>
   </div>
 
 </body>

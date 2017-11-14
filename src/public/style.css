@@ -3,3 +3,88 @@ html, body {
   padding: 0;
   width: 100vw;
 }
+
+.container {
+  max-width: 1100px;
+}
+
+/* NAVBAR */
+
+li.nav-item:nth-last-child(-n+1) a {
+  padding-right: 0;
+}
+
+.logo {
+  font-weight: 900;
+  font-size: 2em;
+  letter-spacing:-1px;
+}
+
+a.logo, a.nav-link {
+  text-decoration: none;
+  color: white;
+}
+
+a.logo:hover {
+  text-decoration: none;
+}
+
+.navbar {
+  padding: .2rem 0;
+  margin-bottom: 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+img.logo {
+  height: 40px;
+}
+
+.nav-links {
+  margin-bottom: 0;
+
+}
+
+.masthead {
+  height: 3.5rem;
+  background-color: black;
+}
+
+/* INDEX */
+
+.content {
+  padding-top: 2rem;
+}
+
+.parallax {
+  height: 400px;
+  background-size: cover;
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
+  background-image: url("http://lorempixel.com/output/nightlife-q-c-1200-480-5.jpg");
+}
+
+/* SIDEBAR */
+
+.index-sidebar {
+  padding: 1rem;
+  border-right: .05rem solid #eee;
+}
+
+.index-main {
+  padding: 1rem;
+}
+
+.header {
+  background-color: black;
+  margin-top: -1rem;
+  color: white;
+  padding-left: .5rem;
+  font-size: 1.5rem;
+}
+
+.sidebar-list {
+  padding: .5rem;
+}
