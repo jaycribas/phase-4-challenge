@@ -34,5 +34,6 @@ const getRecentReviews = () => {
 
 module.exports = {
   getAlbums,
+  getAlbumsByID,
   getRecentReviews
 }
