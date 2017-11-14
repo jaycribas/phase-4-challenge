@@ -20,7 +20,9 @@ const getAlbumsByID = (id) => {
 const getRecentReviews = () => {
   return db.many(`
     SELECT
-      *, TO_CHAR(posted_on, 'MM/DD/YYYY') AS date
+      reviews.*,
+      albums.title,
+      TO_CHAR(posted_on, 'MM/DD/YYYY') AS date
     FROM
       reviews
     JOIN
@@ -32,8 +34,29 @@ const getRecentReviews = () => {
   `)
 }
 
+const getReviewsByAlbumId = (id) => {
+  return db.many(`
+    SELECT
+      reviews.*,
+      users.name AS user,
+      albums.title,
+      TO_CHAR(posted_on, 'MM/DD/YYYY') AS date
+    FROM
+      reviews
+    JOIN
+      albums ON reviews.album_id = albums.id
+    JOIN
+      users ON reviews.user_id = users.id
+    WHERE
+      album_id = $1::int
+    ORDER BY
+      posted_on DESC
+  `, id)
+}
+
 module.exports = {
   getAlbums,
   getAlbumsByID,
-  getRecentReviews
+  getRecentReviews,
+  getReviewsByAlbumId
 }

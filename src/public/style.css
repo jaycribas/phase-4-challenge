@@ -88,3 +88,28 @@ img.logo {
 .sidebar-list {
   padding: .5rem;
 }
+
+/* ALBUMS */
+.album-info{
+  padding-bottom: .05rem;
+}
+
+.album-main {
+  padding-top: 4rem;
+}
+
+@media (max-width: 576px){
+  .offset-2 {
+    margin-left: 0;
+  }
+}
+
+.review {
+  border-bottom: .5px solid #eee;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+h5 {
+  margin-top: 0;
+}

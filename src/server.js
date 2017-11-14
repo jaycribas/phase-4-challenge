@@ -20,7 +20,11 @@ app.get('/', (req, res) => {
     .then((albums) => {
       queries.getRecentReviews()
         .then((reviews) => {
-          res.render('index', { albums, reviews })
+          res.render('index', {
+            albums,
+            reviews,
+            title: 'Vinyl'
+          })
         })
     })
     .catch((error) => {
@@ -31,7 +35,14 @@ app.get('/', (req, res) => {
 app.get('/albums/:id', (req, res) => {
   queries.getAlbumsByID(req.params.id)
     .then((album) => {
-      res.render('album', { album })
+      queries.getReviewsByAlbumId(album.id)
+        .then((reviews) => {
+          res.render('album', {
+            reviews,
+            album,
+            title: `Vinyl : ${album.title}`
+          })
+        })
     })
 })
 
