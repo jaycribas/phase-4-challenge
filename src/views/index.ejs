@@ -9,7 +9,7 @@
         <h2 class='header'>Recent Reviews</h2>
         <div class='sidebar-list'>
           <% reviews.forEach(function(review) { %>
-            <div>
+            <div class='review'>
               <h5><a href="/albums/<%= review.album_id %>"><%= review.title %></a></h5>
               <span>Posted on <%= review.date %></span>
               <p><%= review.body %></p>

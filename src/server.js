@@ -46,6 +46,16 @@ app.get('/albums/:id', (req, res) => {
     })
 })
 
+app.get('/albums/:id/reviews/new', (req, res) => {
+  queries.getAlbumsByID(req.params.id)
+    .then((album) => {
+      res.render('new', {
+        album,
+        title: 'Vinyl : New Review'
+      })
+    })
+})
+
 app.use((req, res) => {
   res.status(404).render('not_found')
 })
