@@ -123,6 +123,13 @@ router.post('/albums/:id/reviews/new', (req, res) => {
     })
 })
 
+router.delete('/albums/:id/reviews/delete', (req, res) => {
+  queries.destroyReview(req.body.id)
+    .then(() => {
+      res.redirect('back')
+    })
+})
+
 router.use((req, res) => {
   res.status(404).render('not_found')
 })

@@ -110,3 +110,11 @@ img.logo {
 h5 {
   margin-top: 0;
 }
+
+.tool {
+  height: 16px;
+}
+
+.tool:hover {
+  cursor: pointer;
+}

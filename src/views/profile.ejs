@@ -16,9 +16,23 @@
       <div class='p-2'>
         <% reviews.forEach(function(review) { %>
           <div class='review'>
-            <h5><a href="/albums/<%= review.album_id %>"><%= review.title %></a></h5>
-            <span><small>Posted on <%= review.date %></small></span>
-            <p><%= review.body %></p>
+            <div class='d-inline'>
+              <span class='h5'><a href="/albums/<%= review.album_id %>"><%= review.title %></a></span>
+              <span class='float-right'><small>Posted on <%= review.date %></small></span>
+            </div>
+            <div class='d-inline-block'>
+              <p><%= review.body %></p>
+                <% if(userDetail.id == user.id){ %>
+                  <div class='float-right'>
+                    <form method='post' action='/albums/<%= review.album_id %>/reviews/delete?_method=DELETE' onSubmit="return confirm('Are you sure you wish to delete this review?')">
+                      <input type='hidden' name='id' value='<%= review.id %>'>
+                      <button type='submit' class='float-right btn btn-link'>
+                        <img class='tool' src="/images/delete-button.svg" alt="delete-button">
+                      </button>
+                    </form>
+                  </div>
+                <% } %>
+            </div>
           </div>
         <% }) %>
       </div>
