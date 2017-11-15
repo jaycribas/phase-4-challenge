@@ -97,6 +97,17 @@ const getReviewsByUserId = (id) => {
   `, id)
 }
 
+const createUser = (user) => {
+  return db.one(`
+    INSERT INTO
+      users (name, email, password, joined_on, img_url)
+    VALUES
+      ($/name/, $/email/, $/password/, NOW(), '/images/blank-profile-picture.png')
+    RETURNING
+      *
+  `, user)
+}
+
 module.exports = {
   getAlbums,
   getAlbumsByID,
@@ -104,5 +115,6 @@ module.exports = {
   getReviewsByAlbumId,
   createReview,
   getUserById,
-  getReviewsByUserId
+  getReviewsByUserId,
+  createUser
 }

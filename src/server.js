@@ -51,6 +51,22 @@ app.use(session({
   saveUninitialized: false
 }))
 
+
+app.post('/sign-up', (req, res) => {
+  const user = req.body
+  console.log("user (╯°□°）╯︵ ┻━┻", user)
+  if (req.body.password !== req.body.confirmPassword) {
+    return res.render('auth/sign-up', {
+      title: 'Vinyl : Sign Up'
+    })
+  }
+  return queries.createUser(user)
+    .then((newUser) => {
+      req.session.user = newUser
+      return res.redirect(`/users/${newUser.id}`)
+    })
+})
+
 app.get('/users/:id', (req, res) => {
   queries.getUserById(req.params.id)
     .then((user) => {
