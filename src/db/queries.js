@@ -108,6 +108,19 @@ const createUser = (user) => {
   `, user)
 }
 
+const findUser = (user) => {
+  return db.one(`
+    SELECT
+      *
+    FROM
+      users
+    WHERE
+      email = $/email/
+    AND
+      password = $/password/
+  `, user)
+}
+
 module.exports = {
   getAlbums,
   getAlbumsByID,
@@ -116,5 +129,6 @@ module.exports = {
   createReview,
   getUserById,
   getReviewsByUserId,
-  createUser
+  createUser,
+  findUser
 }
