@@ -23,7 +23,19 @@
 
             <div class='d-inline-block'>
               <p><%= review.body %></p>
-              <span class='float-right'>by <a href='/users/<%= review.user_id %>'><%= review.user %></a></span>
+              <div class='float-right d-flex align-items-center'>
+                <span>by <a href='/users/<%= review.user_id %>'><%= review.user %></a></span>
+                <% if(user.id == review.user_id){ %>
+                  <div class='float-right'>
+                    <form method='post' action='/albums/<%= review.album_id %>/reviews/delete?_method=DELETE' onSubmit="return confirm('Are you sure you wish to delete this review?')">
+                      <input type='hidden' name='id' value='<%= review.id %>'>
+                      <button type='submit' class='float-right btn btn-link'>
+                        <img class='tool' src="/images/delete-button.svg" alt="delete-button">
+                      </button>
+                    </form>
+                  </div>
+                <% } %>
+              </div>
             </div>
           </div>
         <% }) %>

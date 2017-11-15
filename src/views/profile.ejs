@@ -22,15 +22,15 @@
             </div>
             <div class='d-inline-block'>
               <p><%= review.body %></p>
-              <% if(userDetail.id == user.id){ %>
-                <div class='float-right'>
-                  <form method='post' action='/albums/<%= review.album_id %>/reviews/delete?_method=DELETE' onSubmit="return confirm('Are you sure you wish to delete this review?')">
-                    <input type='hidden' name='id' value='<%= review.id %>'>
-                    <button type='submit' class='float-right btn btn-link'>
-                      <img class='tool' src="/images/delete-button.svg" alt="delete-button">
-                    </button>
-                  </form>
-                </div>
+                <% if(userDetail.id == user.id){ %>
+                  <div class='float-right'>
+                    <form method='post' action='/albums/<%= review.album_id %>/reviews/delete?_method=DELETE' onSubmit="return confirm('Are you sure you wish to delete this review?')">
+                      <input type='hidden' name='id' value='<%= review.id %>'>
+                      <button type='submit' class='float-right btn btn-link'>
+                        <img class='tool' src="/images/delete-button.svg" alt="delete-button">
+                      </button>
+                    </form>
+                  </div>
                 <% } %>
             </div>
           </div>
