@@ -5,10 +5,18 @@
         <a class='logo' href='/'><img class='logo' src="/images/logo.svg" alt="vinyl-logo"></a>
         <a class='logo' href='/'>&nbsp;vinyl</a>
       </div>
-        <ul class='navbar'>
-          <li class='nav-item'><a class='nav-link' href='/sign-up'>Sign Up</a></li>
-          <li class='nav-item'><a class='nav-link' href='/sign-in'>Sign In</a></li>
-        </ul>
+      <% if(isSignedIn) { %>
+          <ul class='navbar'>
+            <li class='nav-item'><a class='nav-link' href='/users/<%= user.id %>'>Profile</a></li>
+            <li class='nav-item'><a class='nav-link' href='/sign-out'>Sign Out</a></li>
+          </ul>
+        <% } else { %>
+          <ul class='navbar'>
+            <li class='nav-item'><a class='nav-link' href='/sign-up'>Sign Up</a></li>
+            <li class='nav-item'><a class='nav-link' href='/sign-in'>Sign In</a></li>
+          </ul>
+      <% } %>
+
     </nav>
   </div>
 </div>
