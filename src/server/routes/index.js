@@ -16,9 +16,6 @@ router.get('/sign-in', (req, res) => {
   res.render('auth/sign-in', {
     title: 'Vinyl : Sign In'
   })
-    .catch((error) => {
-      res.status(500).render('error', { error })
-    })
 })
 
 router.post('/sign-in', (req, res) => {
@@ -42,18 +39,12 @@ router.post('/sign-in', (req, res) => {
 router.get('/sign-out', (req, res) => {
   req.session.destroy()
   res.redirect('/')
-    .catch((error) => {
-      res.status(500).render('error', { error })
-    })
 })
 
 router.get('/sign-up', (req, res) => {
   res.render('auth/sign-up', {
     title: 'Vinyl : Sign Up'
   })
-    .catch((error) => {
-      res.status(500).render('error', { error })
-    })
 })
 
 router.post('/sign-up', (req, res) => {
