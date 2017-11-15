@@ -25,7 +25,7 @@ router.post('/sign-in', (req, res) => {
       if (!foundUser){
         return res.direct('/sign-in')
       }
-      req.session.user = user
+      req.session.user = foundUser
       res.redirect(`/users/${foundUser.id}`)
     })
 })
