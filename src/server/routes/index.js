@@ -12,14 +12,16 @@ router.use(session({
 
 router.use(middlewares.isSignedIn)
 
-router.get('/sign-in', (req, res, next) => {
+router.get('/sign-in', (req, res) => {
   res.render('auth/sign-in', {
     title: 'Vinyl : Sign In'
   })
-    .catch(error => next(error))
+    .catch((error) => {
+      res.status(500).render('error', { error })
+    })
 })
 
-router.post('/sign-in', (req, res, next) => {
+router.post('/sign-in', (req, res) => {
   const user = req.body
   queries.findUser(user)
     .then((foundUser) => {
@@ -30,27 +32,35 @@ router.post('/sign-in', (req, res, next) => {
         })
       }
       req.session.user = foundUser
-      res.redirect(`/users/${foundUser.id}`)
+      return res.redirect(`/users/${foundUser.id}`)
     })
-    .catch(error => next(error))
+    .catch((error) => {
+      res.status(500).render('error', { error })
+    })
 })
 
 router.get('/sign-out', (req, res) => {
   req.session.destroy()
   res.redirect('/')
+    .catch((error) => {
+      res.status(500).render('error', { error })
+    })
 })
 
 router.get('/sign-up', (req, res) => {
   res.render('auth/sign-up', {
     title: 'Vinyl : Sign Up'
   })
+    .catch((error) => {
+      res.status(500).render('error', { error })
+    })
 })
 
 router.post('/sign-up', (req, res) => {
   const user = req.body
   queries.findUserByEmail(user)
     .then((foundUser) => {
-      if(foundUser) {
+      if (foundUser) {
         return res.render('auth/sign-up', {
           title: 'Vinyl : Sign Up',
           warning: 'Email address is already in use'
@@ -62,11 +72,14 @@ router.post('/sign-up', (req, res) => {
           warning: 'Passwords do not match'
         })
       }
-      queries.createUser(user)
+      return queries.createUser(user)
         .then((newUser) => {
           req.session.user = newUser
           return res.redirect(`/users/${newUser.id}`)
         })
+    })
+    .catch((error) => {
+      res.status(500).render('error', { error })
     })
 })
 
@@ -103,6 +116,9 @@ router.get('/users/:id', (req, res) => {
           })
         })
     })
+    .catch((error) => {
+      res.status(500).render('error', { error })
+    })
 })
 
 router.get('/albums/:id', (req, res) => {
@@ -118,6 +134,9 @@ router.get('/albums/:id', (req, res) => {
           })
         })
     })
+    .catch((error) => {
+      res.status(500).render('error', { error })
+    })
 })
 
 router.get('/albums/:id/reviews/new', (req, res) => {
@@ -129,6 +148,9 @@ router.get('/albums/:id/reviews/new', (req, res) => {
         title: 'Vinyl : New Review'
       })
     })
+    .catch((error) => {
+      res.status(500).render('error', { error })
+    })
 })
 
 router.post('/albums/:id/reviews/new', (req, res) => {
@@ -136,12 +158,18 @@ router.post('/albums/:id/reviews/new', (req, res) => {
     .then((review) => {
       res.redirect(`/albums/${review.album_id}`)
     })
+    .catch((error) => {
+      res.status(500).render('error', { error })
+    })
 })
 
 router.delete('/albums/:id/reviews/delete', (req, res) => {
   queries.destroyReview(req.body.id)
     .then(() => {
       res.redirect('back')
+    })
+    .catch((error) => {
+      res.status(500).render('error', { error })
     })
 })
 
