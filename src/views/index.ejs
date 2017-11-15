@@ -7,12 +7,18 @@
       <% include partials/index-sidebar.ejs %>
       <div class='col-sm-9 index-main'>
         <h2 class='header'>Recent Reviews</h2>
-        <div class='sidebar-list'>
+        <div class='p-2'>
           <% reviews.forEach(function(review) { %>
             <div class='review'>
-              <h5><a href="/albums/<%= review.album_id %>"><%= review.title %></a></h5>
-              <span>Posted on <%= review.date %></span>
-              <p><%= review.body %></p>
+              <div class='d-inline'>
+                <span class='h5'><a href="/albums/<%= review.album_id %>"><%= review.title %></a></span>
+                <span class='float-right'><small>Posted on <%= review.date %></small></span>
+              </div>
+              
+              <div class='d-inline-block'>
+                <p><%= review.body %></p>
+                <span class='float-right'>by <a href='/users/<%= review.user_id %>'><%= review.user %></a></span>
+              </div>
             </div>
           <% }) %>
         </div>

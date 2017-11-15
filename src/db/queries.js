@@ -22,11 +22,14 @@ const getRecentReviews = () => {
     SELECT
       reviews.*,
       albums.title,
+      users.name AS user,
       TO_CHAR(posted_on, 'MM/DD/YYYY') AS date
     FROM
       reviews
     JOIN
       albums ON reviews.album_id = albums.id
+    JOIN
+      users ON reviews.user_id = users.id
     ORDER BY
       posted_on DESC
     LIMIT
@@ -65,10 +68,41 @@ const createReview = (review) => {
   `, review)
 }
 
+const getUserById = (id) => {
+  return db.one(`
+    SELECT
+      *,
+      TO_CHAR(joined_on, 'Month DD, YYYY') AS joined_on
+    FROM
+      users
+    WHERE
+      id = $1::int
+  `, id)
+}
+
+const getReviewsByUserId = (id) => {
+  return db.any(`
+    SELECT
+      reviews.*,
+      albums.title,
+      TO_CHAR(posted_on, 'MM/DD/YYYY') AS date
+    FROM
+      reviews
+    JOIN
+      albums ON reviews.album_id = albums.id
+    WHERE
+      user_id = $1::int
+    ORDER BY
+      posted_on DESC
+  `, id)
+}
+
 module.exports = {
   getAlbums,
   getAlbumsByID,
   getRecentReviews,
   getReviewsByAlbumId,
-  createReview
+  createReview,
+  getUserById,
+  getReviewsByUserId
 }
