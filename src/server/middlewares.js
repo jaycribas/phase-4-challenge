@@ -13,6 +13,7 @@ const isSignedIn = (req, res, next) => {
 
 const setDefaultResLocals = (req, res, next) => {
   res.locals.isSignedIn = false
+  res.locals.warning = ''
   next()
 }
 

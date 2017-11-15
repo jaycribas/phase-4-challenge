@@ -4,6 +4,13 @@ const getAlbums = () => {
   return db.many(`
     SELECT * FROM albums
   `)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing getAlbums :(',
+        arguments
+      })
+      throw error
+    })
 }
 
 const getAlbumsByID = (id) => {
@@ -15,6 +22,13 @@ const getAlbumsByID = (id) => {
     WHERE
       id = $1::int
   `, id)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing getAlbumsByID :(',
+        arguments
+      })
+      throw error
+    })
 }
 
 const getRecentReviews = () => {
@@ -35,6 +49,13 @@ const getRecentReviews = () => {
     LIMIT
       3
   `)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing getRecentReviews :(',
+        arguments
+      })
+      throw error
+    })
 }
 
 const getReviewsByAlbumId = (id) => {
@@ -55,6 +76,13 @@ const getReviewsByAlbumId = (id) => {
     ORDER BY
       posted_on DESC
   `, id)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing getReviewsByAlbumId :(',
+        arguments
+      })
+      throw error
+    })
 }
 
 const createReview = (review) => {
@@ -66,6 +94,13 @@ const createReview = (review) => {
     RETURNING
       *
   `, review)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing createReview :(',
+        arguments
+      })
+      throw error
+    })
 }
 
 const destroyReview = (id) => {
@@ -75,6 +110,13 @@ const destroyReview = (id) => {
     WHERE
       id = $1::int
   `, id)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing destroyReview :(',
+        arguments
+      })
+      throw error
+    })
 }
 
 const getUserById = (id) => {
@@ -87,6 +129,13 @@ const getUserById = (id) => {
     WHERE
       id = $1::int
   `, id)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing getUserById :(',
+        arguments
+      })
+      throw error
+    })
 }
 
 const getReviewsByUserId = (id) => {
@@ -104,6 +153,13 @@ const getReviewsByUserId = (id) => {
     ORDER BY
       posted_on DESC
   `, id)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing getReviewsByUserId :(',
+        arguments
+      })
+      throw error
+    })
 }
 
 const createUser = (user) => {
@@ -115,10 +171,17 @@ const createUser = (user) => {
     RETURNING
       *
   `, user)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing createUser :(',
+        arguments
+      })
+      throw error
+    })
 }
 
 const findUser = (user) => {
-  return db.one(`
+  return db.oneOrNone(`
     SELECT
       *
     FROM
@@ -128,6 +191,31 @@ const findUser = (user) => {
     AND
       password = $/password/
   `, user)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing findUser :(',
+        arguments
+      })
+      throw error
+    })
+}
+
+const findUserByEmail = (user) => {
+  return db.oneOrNone(`
+    SELECT
+      *
+    FROM
+      users
+    WHERE
+      email = $/email/
+  `, user)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing findUserByEmail :(',
+        arguments
+      })
+      throw error
+    })
 }
 
 module.exports = {
@@ -140,5 +228,6 @@ module.exports = {
   getUserById,
   getReviewsByUserId,
   createUser,
-  findUser
+  findUser,
+  findUserByEmail
 }

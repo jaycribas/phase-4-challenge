@@ -9,6 +9,12 @@ html, body {
   max-width: 1100px;
 }
 
+/* WARNING */
+pre.form-error{
+  color: red;
+  overflow: visible;
+}
+
 /* NAVBAR */
 
 li.nav-item:nth-last-child(-n+1) a {
