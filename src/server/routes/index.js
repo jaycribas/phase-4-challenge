@@ -30,6 +30,11 @@ router.post('/sign-in', (req, res) => {
     })
 })
 
+router.get('/sign-out', (req, res) => {
+  req.session.destroy()
+  res.redirect('/')
+})
+
 router.get('/sign-up', (req, res) => {
   res.render('auth/sign-up', {
     title: 'Vinyl : Sign Up'
