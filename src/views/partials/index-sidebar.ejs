@@ -4,7 +4,7 @@
   <div class='p-2'>
     <div class="album-list">
       <% albums.forEach(function(album) { %>
-        <div>
+        <div class='review'>
           <h5><a href="/albums/<%= album.id %>"><%= album.title %></a></h5>
           <span><%= album.artist %></span>
         </div>
