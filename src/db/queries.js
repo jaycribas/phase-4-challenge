@@ -68,6 +68,15 @@ const createReview = (review) => {
   `, review)
 }
 
+const destroyReview = (id) => {
+  return db.none(`
+    DELETE FROM
+      reviews
+    WHERE
+      id = $1::int
+  `, id)
+}
+
 const getUserById = (id) => {
   return db.one(`
     SELECT
@@ -127,6 +136,7 @@ module.exports = {
   getRecentReviews,
   getReviewsByAlbumId,
   createReview,
+  destroyReview,
   getUserById,
   getReviewsByUserId,
   createUser,

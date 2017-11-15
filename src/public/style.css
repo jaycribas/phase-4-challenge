@@ -113,5 +113,8 @@ h5 {
 
 .tool {
   height: 16px;
-  transition: none;
+}
+
+.tool:hover {
+  cursor: pointer;
 }
