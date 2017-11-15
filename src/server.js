@@ -56,6 +56,13 @@ app.get('/albums/:id/reviews/new', (req, res) => {
     })
 })
 
+app.post('/albums/:id/reviews/new', (req, res) => {
+  queries.createReview(req.body)
+    .then((review) => {
+      res.redirect(`/albums/${review.album_id}`)
+    })
+})
+
 app.use((req, res) => {
   res.status(404).render('not_found')
 })

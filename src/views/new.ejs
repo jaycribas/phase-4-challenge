@@ -2,10 +2,12 @@
 
 <div class='container content'>
   <div class='col-sm-8 offset-2 album-main'>
-    <h2>New review for <%= album.title %></h2>
+    <h2>New review for <em><%= album.title %></em></h2>
 
     <form action='/albums/<%= album.id %>/reviews/new' method='post'>
-      <textarea rows='8' class='form-control' name='body' required></textarea><br />
+      <input name='album_id' value='<%= album.id %>' type='hidden'>
+      <input name='user_id' value='1' type='hidden'>
+      <textarea rows='8' class='form-control' name='body' autofocus required></textarea><br />
       <input type='submit' class='btn' value='Submit'/>
     </form>
   </div>
