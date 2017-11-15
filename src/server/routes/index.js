@@ -10,24 +10,7 @@ router.use(session({
   saveUninitialized: false
 }))
 
-router.use(middlewares.isLoggedIn)
-
-router.get('/', (req, res) => {
-  queries.getAlbums()
-    .then((albums) => {
-      queries.getRecentReviews()
-        .then((reviews) => {
-          res.render('index', {
-            albums,
-            reviews,
-            title: 'Vinyl'
-          })
-        })
-    })
-    .catch((error) => {
-      res.status(500).render('error', { error })
-    })
-})
+router.use(middlewares.isSignedIn)
 
 router.get('/sign-in', (req, res) => {
   res.render('auth/sign-in', {
@@ -36,12 +19,14 @@ router.get('/sign-in', (req, res) => {
 })
 
 router.post('/sign-in', (req, res) => {
-  queries.findUser(req.body)
-    .then((user) => {
-      if (!user){
+  const user = req.body
+  queries.findUser(user)
+    .then((foundUser) => {
+      if (!foundUser){
         return res.direct('/sign-in')
       }
-      res.redirect(`/users/${user.id}`)
+      req.session.user = user
+      res.redirect(`/users/${foundUser.id}`)
     })
 })
 
@@ -53,7 +38,6 @@ router.get('/sign-up', (req, res) => {
 
 router.post('/sign-up', (req, res) => {
   const user = req.body
-  console.log("user (╯°□°）╯︵ ┻━┻", user)
   if (req.body.password !== req.body.confirmPassword) {
     return res.render('auth/sign-up', {
       title: 'Vinyl : Sign Up'
@@ -65,6 +49,26 @@ router.post('/sign-up', (req, res) => {
       return res.redirect(`/users/${newUser.id}`)
     })
 })
+
+router.get('/', (req, res) => {
+  queries.getAlbums()
+    .then((albums) => {
+      queries.getRecentReviews()
+        .then((reviews) => {
+          res.render('index', {
+            user: req.user,
+            albums,
+            reviews,
+            title: 'Vinyl'
+          })
+        })
+    })
+    .catch((error) => {
+      res.status(500).render('error', { error })
+    })
+})
+
+router.use(middlewares.sessionChecker)
 
 router.get('/users/:id', (req, res) => {
   queries.getUserById(req.params.id)
@@ -86,6 +90,7 @@ router.get('/albums/:id', (req, res) => {
       queries.getReviewsByAlbumId(album.id)
         .then((reviews) => {
           res.render('album', {
+            user: req.user,
             reviews,
             album,
             title: `Vinyl : ${album.title}`
@@ -98,6 +103,7 @@ router.get('/albums/:id/reviews/new', (req, res) => {
   queries.getAlbumsByID(req.params.id)
     .then((album) => {
       res.render('new', {
+        user: req.user,
         album,
         title: 'Vinyl : New Review'
       })

@@ -1,23 +1,23 @@
 const sessionChecker = (req, res, next) => {
   if (!req.session.user) {
-    return res.redirect('/auth/sign-in')
+    return res.redirect('/sign-in')
   } next()
 }
 
-const isLoggedIn = (req, res, next) => {
+const isSignedIn = (req, res, next) => {
   if (req.session.user) {
-    res.locals.isLoggedIn = true
+    res.locals.isSignedIn = true
     req.user = req.session.user
   } next()
 }
 
 const setDefaultResLocals = (req, res, next) => {
-  res.locals.isLoggedIn = false
+  res.locals.isSignedIn = false
   next()
 }
 
 module.exports = {
   sessionChecker,
-  isLoggedIn,
+  isSignedIn,
   setDefaultResLocals
 }
