@@ -77,11 +77,12 @@ router.use(middlewares.sessionChecker)
 
 router.get('/users/:id', (req, res) => {
   queries.getUserById(req.params.id)
-    .then((user) => {
-      queries.getReviewsByUserId(user.id)
+    .then((userDetail) => {
+      queries.getReviewsByUserId(userDetail.id)
         .then((reviews) => {
           res.render('profile', {
-            user,
+            user: req.user,
+            userDetail,
             reviews,
             title: 'Vinyl : Profile'
           })
