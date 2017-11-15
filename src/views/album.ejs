@@ -9,7 +9,8 @@
       </div>
 
       <div class='review-list content'>
-        <h2>Reviews</h2>
+        <h2 class='d-inline'>Reviews</h2>
+        <a class='btn btn-primary float-right' href='/albums/<%= album.id %>/reviews/new' role="button">Add review</a>
 
         <% reviews.forEach(function(review) { %>
           <div class='review'>

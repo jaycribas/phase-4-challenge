@@ -20,6 +20,6 @@ CREATE TABLE reviews (
   id SERIAL,
   album_id INT REFERENCES albums,
   user_id INT REFERENCES users,
-  posted_on DATE,
+  posted_on timestamp,
   body TEXT
 );

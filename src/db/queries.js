@@ -54,9 +54,21 @@ const getReviewsByAlbumId = (id) => {
   `, id)
 }
 
+const createReview = (review) => {
+  return db.one(`
+    INSERT INTO
+      reviews (album_id, user_id, posted_on, body)
+    VALUES
+      ($/album_id/, $/user_id/, NOW(), $/body/)
+    RETURNING
+      *
+  `, review)
+}
+
 module.exports = {
   getAlbums,
   getAlbumsByID,
   getRecentReviews,
-  getReviewsByAlbumId
+  getReviewsByAlbumId,
+  createReview
 }
