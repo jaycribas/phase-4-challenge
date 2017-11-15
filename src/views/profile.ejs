@@ -1,0 +1,32 @@
+<% include partials/header.ejs %>
+
+<div class='container content'>
+  <div class='row pt-5'>
+    <div class='col-sm-3 pt-4'>
+      <img class='rounded img-fluid' src='<%= user.img_url %>'/>
+    </div>
+
+    <div class='col-sm-9 index-main'>
+      <h1><strong><%= user.name %></strong></h1>
+      <h5>Email: <%= user.email %></h5>
+      <h6><small>Date joined: <%= user.joined_on %></small></h6>
+      <div class='pt-5'>
+
+      <h2 class='header'>Reviews</h2>
+      <div class='p-2'>
+        <% reviews.forEach(function(review) { %>
+          <div class='review'>
+            <h5><a href="/albums/<%= review.album_id %>"><%= review.title %></a></h5>
+            <span><small>Posted on <%= review.date %></small></span>
+            <p><%= review.body %></p>
+          </div>
+        <% }) %>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<% include partials/footer.ejs %>

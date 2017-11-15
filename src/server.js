@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
-// const db = require('./db')
+const session = require('express-session')
 const queries = require('./db/queries')
 
 const port = process.env.PORT || 3000
@@ -29,6 +29,39 @@ app.get('/', (req, res) => {
     })
     .catch((error) => {
       res.status(500).render('error', { error })
+    })
+})
+
+app.get('/sign-in', (req, res) => {
+  res.render('auth/sign-in', {
+    title: 'Vinyl : Sign In'
+  })
+})
+
+app.get('/sign-up', (req, res) => {
+  res.render('auth/sign-up', {
+    title: 'Vinyl : Sign Up'
+  })
+})
+
+app.use(session({
+  key: 'user_sid',
+  secret: 'vinyl top secret',
+  resave: false,
+  saveUninitialized: false
+}))
+
+app.get('/users/:id', (req, res) => {
+  queries.getUserById(req.params.id)
+    .then((user) => {
+      queries.getReviewsByUserId(user.id)
+        .then((reviews) => {
+          res.render('profile', {
+            user,
+            reviews,
+            title: 'Vinyl : Profile'
+          })
+        })
     })
 })
 

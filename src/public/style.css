@@ -86,21 +86,13 @@ img.logo {
   font-size: 1.5rem;
 }
 
-.sidebar-list {
-  padding: .5rem;
-}
-
 /* ALBUMS */
 .album-info{
   padding-bottom: .05rem;
 }
 
-.album-main {
-  padding-top: 4rem;
-}
-
 @media (max-width: 576px){
-  .offset-2 {
+  .offset-2, .offset-4 {
     margin-left: 0;
   }
 }
