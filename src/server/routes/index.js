@@ -12,22 +12,27 @@ router.use(session({
 
 router.use(middlewares.isSignedIn)
 
-router.get('/sign-in', (req, res) => {
+router.get('/sign-in', (req, res, next) => {
   res.render('auth/sign-in', {
     title: 'Vinyl : Sign In'
   })
+    .catch(error => next(error))
 })
 
-router.post('/sign-in', (req, res) => {
+router.post('/sign-in', (req, res, next) => {
   const user = req.body
   queries.findUser(user)
     .then((foundUser) => {
-      if (!foundUser){
-        return res.direct('/sign-in')
+      if (!foundUser) {
+        return res.render('auth/sign-in', {
+          warning: 'Incorrect email or password',
+          title: 'Vinyl : Sign In'
+        })
       }
       req.session.user = foundUser
       res.redirect(`/users/${foundUser.id}`)
     })
+    .catch(error => next(error))
 })
 
 router.get('/sign-out', (req, res) => {
@@ -43,15 +48,25 @@ router.get('/sign-up', (req, res) => {
 
 router.post('/sign-up', (req, res) => {
   const user = req.body
-  if (req.body.password !== req.body.confirmPassword) {
-    return res.render('auth/sign-up', {
-      title: 'Vinyl : Sign Up'
-    })
-  }
-  return queries.createUser(user)
-    .then((newUser) => {
-      req.session.user = newUser
-      return res.redirect(`/users/${newUser.id}`)
+  queries.findUserByEmail(user)
+    .then((foundUser) => {
+      if(foundUser) {
+        return res.render('auth/sign-up', {
+          title: 'Vinyl : Sign Up',
+          warning: 'Email address is already in use'
+        })
+      }
+      if (req.body.password !== req.body.confirmPassword) {
+        return res.render('auth/sign-up', {
+          title: 'Vinyl : Sign Up',
+          warning: 'Passwords do not match'
+        })
+      }
+      queries.createUser(user)
+        .then((newUser) => {
+          req.session.user = newUser
+          return res.redirect(`/users/${newUser.id}`)
+        })
     })
 })
 

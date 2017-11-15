@@ -4,6 +4,7 @@
     <div class='col-sm-4 offset-4 p-5'>
       <h1>Welcome back!</h1>
       <form action='/sign-in' method='POST'>
+        <pre class='form-error'><%= warning %></pre>
         <input type='email' class='form-control' name='email' placeholder='email' required/><br />
         <input type='password' class='form-control' name='password' placeholder='password' required/><br />
         <input class='btn btn-primary' type='submit' value='Sign In' />

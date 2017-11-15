@@ -181,7 +181,7 @@ const createUser = (user) => {
 }
 
 const findUser = (user) => {
-  return db.one(`
+  return db.oneOrNone(`
     SELECT
       *
     FROM
@@ -200,6 +200,24 @@ const findUser = (user) => {
     })
 }
 
+const findUserByEmail = (user) => {
+  return db.oneOrNone(`
+    SELECT
+      *
+    FROM
+      users
+    WHERE
+      email = $/email/
+  `, user)
+    .catch((error) => {
+      console.error({
+        message: 'Error while executing findUserByEmail :(',
+        arguments
+      })
+      throw error
+    })
+}
+
 module.exports = {
   getAlbums,
   getAlbumsByID,
@@ -210,5 +228,6 @@ module.exports = {
   getUserById,
   getReviewsByUserId,
   createUser,
-  findUser
+  findUser,
+  findUserByEmail
 }
