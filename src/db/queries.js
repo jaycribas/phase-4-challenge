@@ -103,13 +103,15 @@ const createReview = (review) => {
     })
 }
 
-const destroyReview = (id) => {
+const destroyReview = (reviewId, userId) => {
   return db.none(`
     DELETE FROM
       reviews
     WHERE
       id = $1::int
-  `, id)
+    AND
+      user_id = $2::int
+  `, [reviewId, userId])
     .catch((error) => {
       console.error({
         message: 'Error while executing destroyReview :(',
